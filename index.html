@@ -3,110 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ForgeVision — Dalla tua mente alla realtà</title>
+  <title>ForgeVision | Dalla tua mente alla realtà</title>
+  <meta name="description" content="ForgeVision trasforma idee, schizzi e file STL in oggetti reali tramite progettazione e stampa 3D." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="background">
-    <div class="grid"></div>
-    <div class="orb orb-one"></div>
-    <div class="orb orb-two"></div>
+  <div class="site-bg">
+    <div class="grid-bg"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
     <canvas id="particles"></canvas>
   </div>
 
   <header class="navbar">
-    <a class="logo" href="#top">FORGEVISION</a>
+    <a href="#top" class="brand">FORGEVISION</a>
     <nav>
+      <a href="#come-funziona">Come funziona</a>
       <a href="#studio">Studio</a>
-      <a href="#how">Come funziona</a>
       <a href="#shop">Shop</a>
-      <a href="#contact">Contatti</a>
+      <a href="#portfolio">Portfolio</a>
     </nav>
+    <button class="nav-cta" data-open-studio>Accedi allo Studio</button>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="hero-content reveal">
-        <p class="eyebrow">Progettazione e stampa 3D su misura</p>
-        <h1>FORGEVISION</h1>
-        <h2>Dalla tua mente alla realtà</h2>
-        <p class="hero-text">Non servono competenze di modellazione 3D. Basta la tua idea.</p>
+      <div class="hero-kicker">Progettazione · Stampa 3D · Shop</div>
+      <h1>FORGEVISION</h1>
+      <p class="slogan">Dalla tua mente alla realtà</p>
+      <p class="promise">Non servono competenze di modellazione 3D. Basta la tua idea.</p>
 
-        <div class="studio-card" id="studio">
-          <div class="studio-top">
-            <span>✨ ForgeVision Studio</span>
-            <small>Beta</small>
-          </div>
-          <textarea id="quickIdea" placeholder="Scrivi la tua idea... es. Vorrei creare un supporto per cuffie moderno"></textarea>
-          <div class="upload-row">
-            <button class="ghost">📷 Carica schizzo</button>
-            <button class="ghost">📦 Carica STL</button>
-          </div>
-          <button class="primary" id="openStudio">🚀 Dai vita alla tua idea</button>
+      <div class="studio-card" id="studio">
+        <div class="studio-card-head">
+          <span>✨ ForgeVision Studio</span>
+          <small>inizia da qui</small>
         </div>
+        <textarea id="quickIdea" placeholder="Descrivi la tua idea... Es. Vorrei creare un supporto per cuffie moderno da scrivania"></textarea>
+        <div class="upload-row">
+          <label class="fake-upload">📷 Carica schizzo <input type="file" accept="image/*" hidden /></label>
+          <label class="fake-upload">📦 Carica STL <input type="file" accept=".stl,.obj,.3mf" hidden /></label>
+        </div>
+        <button class="primary large" data-open-studio>🚀 Dai vita alla tua idea</button>
+      </div>
+
+      <div class="paths">
+        <button class="path-card" data-path="idea" data-open-studio>
+          <b>💡 Ho un'idea</b>
+          <span>Descrivila, la trasformiamo in progetto.</span>
+        </button>
+        <button class="path-card" data-path="stl" data-open-studio>
+          <b>📦 Ho un file STL</b>
+          <span>Carica il modello e scegli i dettagli.</span>
+        </button>
+        <a class="path-card" href="#shop">
+          <b>🛒 Visita lo Shop</b>
+          <span>Scopri prodotti pronti e personalizzabili.</span>
+        </a>
       </div>
     </section>
 
-    <section class="choice-section reveal">
-      <h2>Scegli come iniziare</h2>
-      <div class="choice-grid">
-        <button class="choice-card open-studio" data-path="idea"><span>💡</span><h3>Ho un'idea</h3><p>Descrivi quello che immagini. Pensiamo noi alla progettazione.</p></button>
-        <button class="choice-card open-studio" data-path="stl"><span>📦</span><h3>Ho un file STL</h3><p>Carica il tuo modello e scegli materiale, colore e quantità.</p></button>
-        <a class="choice-card" href="#shop"><span>🛒</span><h3>Visita lo Shop</h3><p>Scopri prodotti già pronti e personalizzabili.</p></a>
+    <section class="section" id="come-funziona">
+      <div class="section-title">
+        <span>Processo</span>
+        <h2>Come funziona</h2>
+      </div>
+      <div class="timeline">
+        <article><div>💡</div><h3>1. Idea o file</h3><p>Scrivi un’idea, carica un’immagine oppure un file STL.</p></article>
+        <article><div>📐</div><h3>2. Progettazione</h3><p>Trasformiamo la tua idea in un modello 3D pronto per la stampa.</p></article>
+        <article><div>🖨️</div><h3>3. Produzione</h3><p>Stampiamo il tuo progetto e lo spediamo direttamente a casa tua.</p></article>
       </div>
     </section>
 
-    <section class="section reveal" id="how">
-      <p class="eyebrow">Metodo</p>
-      <h2>Come funziona</h2>
-      <div class="steps">
-        <article><span>01</span><h3>Idea o file</h3><p>Scrivi un'idea, carica un'immagine oppure invia un file STL.</p></article>
-        <article><span>02</span><h3>Progettazione</h3><p>Trasformiamo la tua idea in un modello 3D pronto per la stampa.</p></article>
-        <article><span>03</span><h3>Produzione</h3><p>Stampiamo il tuo progetto e lo spediamo direttamente a casa tua.</p></article>
+    <section class="section split">
+      <div>
+        <span class="eyebrow">Cosa possiamo realizzare</span>
+        <h2>Dal gadget al prototipo tecnico</h2>
+        <p>ForgeVision è pensato per chi ha un’idea ma non sa come trasformarla in un prodotto reale. Possiamo partire da una frase, uno schizzo, un file STL o un prodotto da personalizzare.</p>
       </div>
-    </section>
-
-    <section class="section reveal">
-      <p class="eyebrow">Possibilità</p>
-      <h2>Cosa possiamo realizzare</h2>
       <div class="category-grid">
-        <div>🏠 Casa</div><div>🚗 Auto e moto</div><div>🎮 Gaming</div><div>🎁 Regali</div><div>🛠 Ricambi</div><div>🏢 Aziende</div>
+        <div>🏠 Casa</div><div>🎮 Gaming</div><div>🛠️ Ricambi</div><div>🚗 Auto</div><div>🎁 Regali</div><div>🏢 Aziende</div>
       </div>
     </section>
 
-    <section class="section reveal" id="shop">
-      <p class="eyebrow">Shop</p>
-      <h2>Prodotti in evidenza</h2>
-      <div class="product-grid">
-        <article class="product"><div class="product-img">🎧</div><h3>Supporto cuffie</h3><p>Design moderno e personalizzabile.</p><strong>da 19,90€</strong></article>
-        <article class="product"><div class="product-img">🎮</div><h3>Dock controller</h3><p>Per setup gaming ordinati.</p><strong>da 14,90€</strong></article>
-        <article class="product"><div class="product-img">🔧</div><h3>Ricambio su misura</h3><p>Realizzato partendo dalle tue misure.</p><strong>su preventivo</strong></article>
+    <section class="section" id="shop">
+      <div class="section-title">
+        <span>Shop</span>
+        <h2>Prodotti in evidenza</h2>
+      </div>
+      <div class="products">
+        <article><div class="product-image">🎧</div><h3>Supporto cuffie</h3><p>Design moderno da scrivania.</p><strong>da 14,90€</strong></article>
+        <article><div class="product-image">🎮</div><h3>Stand controller</h3><p>Personalizzabile per console.</p><strong>da 12,90€</strong></article>
+        <article><div class="product-image">🔧</div><h3>Ricambio su misura</h3><p>Creato partendo da misure o foto.</p><strong>su preventivo</strong></article>
       </div>
     </section>
 
-    <section class="cta reveal" id="contact">
-      <h2>Hai un'idea da trasformare?</h2>
-      <p>Entra nel ForgeVision Studio e iniziamo a darle forma.</p>
-      <button class="primary open-studio">✨ Apri ForgeVision Studio</button>
+    <section class="section" id="portfolio">
+      <div class="portfolio-card">
+        <span class="eyebrow">Portfolio</span>
+        <h2>Ogni progetto racconta un percorso</h2>
+        <p>Idea → Concept → Modello 3D → Stampa → Oggetto reale. Questa sarà la sezione dove mostreremo i lavori realizzati e il processo dietro ogni oggetto.</p>
+        <button class="secondary" data-open-studio>Inizia un progetto simile</button>
+      </div>
     </section>
   </main>
 
   <footer>
     <strong>FORGEVISION</strong>
-    <span>© 2026 — Dalla tua mente alla realtà</span>
+    <span>Dalla tua mente alla realtà</span>
+    <small>© 2026 ForgeVision</small>
   </footer>
 
   <div class="studio-overlay" id="studioOverlay" aria-hidden="true">
-    <div class="studio-panel" role="dialog" aria-modal="true" aria-label="ForgeVision Studio">
-      <button class="close" id="closeStudio">×</button>
-      <div class="panel-header">
-        <div><p class="eyebrow">✨ ForgeVision Studio</p><h2 id="stepTitle">Come possiamo aiutarti?</h2></div>
-        <span id="progressLabel">1 / 8</span>
+    <div class="studio-shell" role="dialog" aria-modal="true" aria-label="ForgeVision Studio">
+      <button class="close-studio" id="closeStudio">×</button>
+      <div class="studio-header">
+        <div>
+          <span class="eyebrow">✨ ForgeVision Studio</span>
+          <h2 id="stepTitle">Come possiamo aiutarti?</h2>
+        </div>
+        <span id="stepCounter">1 / 8</span>
       </div>
-      <div class="progress"><div id="progressBar"></div></div>
-      <div class="step-body" id="stepBody"></div>
-      <div class="panel-actions">
-        <button class="ghost" id="prevStep">Indietro</button>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div class="studio-step" id="studioStep"></div>
+      <div class="studio-actions">
+        <button class="secondary" id="prevStep">Indietro</button>
         <button class="primary" id="nextStep">Avanti</button>
       </div>
     </div>
