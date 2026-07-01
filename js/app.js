@@ -20,3 +20,24 @@ function closeStudio(){overlay.classList.remove('active');overlay.setAttribute('
 function renderStep(){const total=steps.length;stepTitle.textContent=steps[step].title;stepCounter.textContent=`${step+1} / ${total}`;progressBar.style.width=`${((step+1)/total)*100}%`;stepBox.innerHTML=steps[step].render();prevBtn.style.visibility=step===0?'hidden':'visible';nextBtn.textContent=step===total-1?'Fine':'Avanti';overlay.scrollTop=0;bindDynamic()}
 function bindDynamic(){stepBox.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>{data[el.dataset.key]=el.dataset.val;renderStep()}));const desc=document.getElementById('descInput');if(desc)desc.addEventListener('input',e=>data.description=e.target.value);const help=document.getElementById('helpIdea');if(help)help.addEventListener('click',()=>{data.description=(desc.value?desc.value+'\n\n':'')+'Mi aiuti a trasformare questa idea in un progetto chiaro, definendo uso, dimensioni, stile e dettagli funzionali.';renderStep()});const minus=document.getElementById('minusQty');const plus=document.getElementById('plusQty');if(minus)minus.onclick=()=>{data.quantity=Math.max(1,data.quantity-1);renderStep()};if(plus)plus.onclick=()=>{data.quantity++;renderStep()};const send=document.getElementById('sendRequest');if(send)send.onclick=()=>alert('Richiesta pronta. Nel prossimo step collegheremo email, WhatsApp o database ordini.')} 
 document.querySelectorAll('[data-open-studio]').forEach(btn=>btn.addEventListener('click',()=>openStudio(btn.dataset.path||'')));document.getElementById('closeStudio').addEventListener('click',closeStudio);overlay.addEventListener('click',e=>{if(e.target===overlay)closeStudio()});prevBtn.onclick=()=>{if(step>0){step--;renderStep()}};nextBtn.onclick=()=>{if(step<steps.length-1){step++;renderStep()}else closeStudio()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('active'))closeStudio()});
+
+
+// V9.1 Gallery popup
+const galleryOverlay = document.getElementById('galleryOverlay');
+const closeGalleryBtn = document.getElementById('closeGallery');
+document.querySelectorAll('[data-open-gallery]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    galleryOverlay.classList.add('active');
+    galleryOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    galleryOverlay.scrollTop = 0;
+  });
+});
+function closeGallery(){
+  galleryOverlay.classList.remove('active');
+  galleryOverlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+if(closeGalleryBtn) closeGalleryBtn.addEventListener('click', closeGallery);
+if(galleryOverlay) galleryOverlay.addEventListener('click', e => { if(e.target === galleryOverlay) closeGallery(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && galleryOverlay && galleryOverlay.classList.contains('active')) closeGallery(); });
