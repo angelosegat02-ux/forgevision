@@ -10,62 +10,77 @@ const steps=[
 {title:'Scegli un colore',render:()=>`<div class="color-row">${['Bianco','Nero','Rosso','Blu','Verde','Giallo','Altro'].map((c,i)=>`<button class="option ${data.color===c?'selected':''}" data-key="color" data-val="${c}"><b>${['⚪','⚫','🔴','🔵','🟢','🟡','🎨'][i]} ${c}</b></button>`).join('')}</div>`},
 {title:'Quanti pezzi vuoi?',render:()=>`<div class="quantity"><button id="minusQty">−</button><strong id="qtyValue">${data.quantity}</strong><button id="plusQty">+</button></div>`},
 {title:'Consegna',render:()=>cards('delivery',[['Standard','🚚 Standard','Tempi normali'],['Espressa','⚡ Espressa','Priorità nella produzione'],['Ritiro','📍 Ritiro','Ritira di persona']])},
-{title:'ForgeVision Designer',render:()=>designerProposals()},
-{title:'Riepilogo finale',render:()=>`<div class="summary"><p><b>Percorso:</b> ${label(data.path)||'Non selezionato'}</p><p><b>Descrizione:</b> ${data.description||'Non inserita'}</p><p><b>Dimensione:</b> ${data.size||'Non selezionata'}</p><p><b>Materiale:</b> ${data.material||'Non selezionato'}</p><p><b>Colore:</b> ${data.color||'Non selezionato'}</p><p><b>Quantità:</b> ${data.quantity}</p><p><b>Consegna:</b> ${data.delivery||'Non selezionata'}</p><p><b>Concept scelto:</b> ${label(data.concept)||'Non selezionato'}</p></div><button class="primary large" style="margin-top:18px" id="sendRequest">Conferma proposta e prosegui al preventivo</button>`}
+{title:'ForgeVision Designer',render:()=>`<div class="designer-intro"><span>✨ ForgeVision Designer</span><h3>Ecco 3 proposte ragionate per il tuo progetto</h3><p>Ho usato le informazioni che mi hai dato per creare tre direzioni diverse. Non siamo ancora al preventivo: prima scegliamo insieme la soluzione più vicina a ciò che vuoi realizzare.</p></div><div class="proposal-grid">${proposalCards()}</div>`},
+{title:'Conferma proposta',render:()=>confirmProposal()}
 ];
-
-function inferProjectType(){
-  const d=(data.description||quickIdea.value||'').toLowerCase();
-  if(d.includes('cuff')||d.includes('headphone')) return 'supporto per cuffie';
-  if(d.includes('controller')||d.includes('joystick')) return 'supporto controller';
-  if(d.includes('telefono')||d.includes('smartphone')) return 'supporto smartphone';
-  if(d.includes('ricambio')||d.includes('pezzo')) return 'ricambio personalizzato';
-  if(d.includes('chiave')||d.includes('portachiavi')) return 'portachiavi personalizzato';
-  return 'oggetto personalizzato';
-}
-function designerProposals(){
-  const project=inferProjectType();
-  const mat=data.material&&data.material!=='Non lo so'?data.material:'PETG';
-  const size=data.size||'Media';
-  const proposals=[
-    {
-      id:'minimal',
-      tag:'PROPOSTA 1',
-      title:'Design Minimal',
-      render:'minimal',
-      desc:`Soluzione pulita ed essenziale per un ${project}. È pensata per occupare poco spazio, essere semplice da produrre e mantenere un aspetto elegante.`,
-      reason:`Ho scelto linee semplici perché riducono il rischio di difetti in stampa e rendono il pezzo più facile da rifinire. Dimensione indicativa: ${size}. Materiale consigliato: ${mat}.`,
-      points:['Ingombro ridotto','Stampa più rapida','Aspetto ordinato','Ottimo rapporto costo/qualità']
+function getProposalInfo(id){
+  const baseMaterial = data.material && data.material !== 'Non lo so' ? data.material : 'PETG';
+  const color = data.color || 'Nero';
+  const size = data.size || 'Medio';
+  const common = {material:baseMaterial,color,size};
+  const proposals={
+    minimal:{
+      name:'Design Minimal', tag:'Pulito ed essenziale', badge:'Più semplice', icon:'minimal',
+      desc:'Una soluzione compatta, elegante e facile da produrre, pensata per un risultato ordinato e moderno.',
+      reasoning:`Ho scelto una forma essenziale perché riduce ingombro, tempi di stampa e complessità. È ideale se vuoi un oggetto funzionale, discreto e con un costo più controllato.`,
+      points:['Ingombro ridotto','Linee pulite','Produzione più semplice',`Materiale consigliato: ${baseMaterial}`]
     },
-    {
-      id:'moderno',
-      tag:'PROPOSTA 2',
-      title:'Design Moderno',
-      render:'modern',
-      recommended:true,
-      desc:`Soluzione più scenica e distintiva per trasformare il ${project} in un oggetto funzionale ma anche bello da vedere.`,
-      reason:`Ho previsto una base più stabile e una forma leggermente inclinata per migliorare l’uso quotidiano. È la proposta più equilibrata tra estetica, resistenza e produzione.`,
-      points:['Base stabile','Look più premium','Buona resistenza','Consigliato per uso quotidiano']
+    modern:{
+      name:'Design Moderno', tag:'Consigliata', badge:'Consigliata', icon:'modern',
+      desc:'Una proposta più curata, con una forma dinamica e una base stabile, pensata per un aspetto più distintivo.',
+      reasoning:`Ho bilanciato estetica e funzionalità: una base più stabile, spessori regolari e un profilo più moderno. È la scelta migliore se vuoi un oggetto bello da vedere ma comunque pratico.`,
+      points:['Base stabile','Aspetto più premium','Buona resistenza',`Colore ideale: ${color}`]
     },
-    {
-      id:'tecnico',
-      tag:'PROPOSTA 3',
-      title:'Design Tecnico',
-      render:'technical',
-      desc:`Soluzione più robusta e funzionale, ideale se il ${project} deve durare nel tempo o sopportare sollecitazioni.`,
-      reason:`Ho aggiunto rinforzi strutturali e geometrie più tecniche per aumentare la rigidità. Richiede più materiale, ma offre maggiore sicurezza.`,
-      points:['Struttura rinforzata','Massima stabilità','Più resistente','Ideale per uso intensivo']
+    technical:{
+      name:'Design Tecnico', tag:'Più resistente', badge:'Robusta', icon:'technical',
+      desc:'Una versione più strutturata e rinforzata, adatta quando servono resistenza, durata e affidabilità.',
+      reasoning:`Ho aggiunto rinforzi e geometrie più tecniche perché il pezzo sia più robusto. Questa proposta è indicata se l’oggetto deve sopportare peso, urti o utilizzo frequente.`,
+      points:['Struttura rinforzata','Massima resistenza','Design funzionale',`Dimensione: ${size}`]
     }
-  ];
-  return `<div class="designer-intro"><p>ForgeVision Designer ha analizzato le informazioni raccolte e ti propone tre direzioni progettuali. Ogni proposta include un ragionamento e un render indicativo dell’oggetto.</p></div><div class="proposal-grid">${proposals.map(p=>`<button class="proposal-card ${data.concept===p.id?'selected':''} ${p.recommended?'recommended':''}" data-key="concept" data-val="${p.id}">${p.recommended?'<span class="recommended-badge">★ consigliata</span>':''}<small>${p.tag}</small><h3>${p.title}</h3><p>${p.desc}</p><div class="render-frame"><div class="render-object render-${p.render}"><span></span><i></i><b></b></div></div><div class="reason-box"><strong>Perché l’ho pensata così</strong><span>${p.reason}</span></div><ul>${p.points.map(x=>`<li>✅ ${x}</li>`).join('')}</ul><em>Seleziona questa proposta →</em></button>`).join('')}</div><div class="designer-note"><b>Non è ancora il modello 3D definitivo.</b> È un render concettuale per scegliere la direzione. Dopo la tua conferma potremo passare al preventivo e alla progettazione finale.</div>`;
+  };
+  return {...proposals[id],...common};
 }
-
-function label(v){return {idea:'Ho un\'idea',stl:'Ho un file STL',modify:'Modifica oggetto',minimal:'Design Minimal',moderno:'Design Moderno',tecnico:'Design Tecnico',premium:'Design Premium'}[v]||v}
+function proposalCards(){
+  return ['minimal','modern','technical'].map(id=>{
+    const p=getProposalInfo(id);
+    return `<button class="proposal-card ${data.concept===id?'selected':''}" data-key="concept" data-val="${id}">
+      <div class="proposal-top"><small>${p.tag}</small><strong>${p.name}</strong></div>
+      <div class="proposal-render ${p.icon}" aria-label="Render concettuale ${p.name}">
+        <div class="render-base"></div><div class="render-arm"></div><div class="render-head"></div><div class="render-shadow"></div>
+      </div>
+      <p>${p.desc}</p>
+      <div class="reasoning"><b>Ragionamento</b><span>${p.reasoning}</span></div>
+      <ul>${p.points.map(x=>`<li>✔ ${x}</li>`).join('')}</ul>
+      <span class="select-proposal">Seleziona questa proposta →</span>
+    </button>`;
+  }).join('')
+}
+function confirmProposal(){
+  if(!data.concept){
+    return `<div class="designer-intro"><span>✨ ForgeVision Designer</span><h3>Scegli una proposta prima di continuare</h3><p>Torna indietro e seleziona il design che senti più vicino alla tua idea. Dopo la scelta potrai confermarlo oppure chiedere modifiche.</p></div>`;
+  }
+  const p=getProposalInfo(data.concept);
+  return `<div class="summary proposal-summary">
+    <span class="eyebrow">Proposta selezionata</span>
+    <h3>${p.name}</h3>
+    <div class="proposal-render ${p.icon} large-render"><div class="render-base"></div><div class="render-arm"></div><div class="render-head"></div><div class="render-shadow"></div></div>
+    <p>${p.desc}</p>
+    <div class="reasoning"><b>Perché l'ho pensato così</b><span>${p.reasoning}</span></div>
+    <p><b>Materiale:</b> ${p.material}</p>
+    <p><b>Colore:</b> ${p.color}</p>
+    <p><b>Dimensione:</b> ${p.size}</p>
+  </div>
+  <div class="confirm-actions">
+    <button class="primary large" id="confirmDesign">Sì, questa proposta è corretta</button>
+    <button class="secondary large" id="editDesign">Vorrei modificarla con il Designer</button>
+  </div>`;
+}
+function label(v){return {idea:'Ho un\'idea',stl:'Ho un file STL',modify:'Modifica oggetto',minimal:'Design Minimal',modern:'Design Moderno',technical:'Design Tecnico'}[v]||v}
 function cards(key,arr){return `<div class="option-grid">${arr.map(a=>`<button class="option ${data[key]===a[0]?'selected':''}" data-key="${key}" data-val="${a[0]}"><b>${a[1]}</b><span>${a[2]}</span></button>`).join('')}</div>`}
 function openStudio(path){overlay.classList.add('active');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';if(path)data.path=path;if(quickIdea.value&&!data.description)data.description=quickIdea.value;renderStep()}
 function closeStudio(){overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
 function renderStep(){const total=steps.length;stepTitle.textContent=steps[step].title;stepCounter.textContent=`${step+1} / ${total}`;progressBar.style.width=`${((step+1)/total)*100}%`;stepBox.innerHTML=steps[step].render();prevBtn.style.visibility=step===0?'hidden':'visible';nextBtn.textContent=step===total-1?'Fine':'Avanti';overlay.scrollTop=0;bindDynamic()}
-function bindDynamic(){stepBox.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>{data[el.dataset.key]=el.dataset.val;renderStep()}));const desc=document.getElementById('descInput');if(desc)desc.addEventListener('input',e=>data.description=e.target.value);const help=document.getElementById('helpIdea');if(help)help.addEventListener('click',()=>{data.description=(desc.value?desc.value+'\n\n':'')+'Mi aiuti a trasformare questa idea in un progetto chiaro, definendo uso, dimensioni, stile e dettagli funzionali.';renderStep()});const minus=document.getElementById('minusQty');const plus=document.getElementById('plusQty');if(minus)minus.onclick=()=>{data.quantity=Math.max(1,data.quantity-1);renderStep()};if(plus)plus.onclick=()=>{data.quantity++;renderStep()};const send=document.getElementById('sendRequest');if(send)send.onclick=()=>alert('Proposta confermata. Nel prossimo step collegheremo il preventivo intelligente e l’invio richiesta.')} 
+function bindDynamic(){stepBox.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>{data[el.dataset.key]=el.dataset.val;renderStep()}));const desc=document.getElementById('descInput');if(desc)desc.addEventListener('input',e=>data.description=e.target.value);const help=document.getElementById('helpIdea');if(help)help.addEventListener('click',()=>{data.description=(desc.value?desc.value+'\n\n':'')+'Mi aiuti a trasformare questa idea in un progetto chiaro, definendo uso, dimensioni, stile e dettagli funzionali.';renderStep()});const minus=document.getElementById('minusQty');const plus=document.getElementById('plusQty');if(minus)minus.onclick=()=>{data.quantity=Math.max(1,data.quantity-1);renderStep()};if(plus)plus.onclick=()=>{data.quantity++;renderStep()};const confirm=document.getElementById('confirmDesign');if(confirm)confirm.onclick=()=>alert('Perfetto: proposta confermata. Nel prossimo step collegheremo questa conferma al preventivo intelligente.');const edit=document.getElementById('editDesign');if(edit)edit.onclick=()=>{step=7;renderStep();}} 
 document.querySelectorAll('[data-open-studio]').forEach(btn=>btn.addEventListener('click',()=>openStudio(btn.dataset.path||'')));document.getElementById('closeStudio').addEventListener('click',closeStudio);overlay.addEventListener('click',e=>{if(e.target===overlay)closeStudio()});prevBtn.onclick=()=>{if(step>0){step--;renderStep()}};nextBtn.onclick=()=>{if(step<steps.length-1){step++;renderStep()}else closeStudio()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('active'))closeStudio()});
 
 
