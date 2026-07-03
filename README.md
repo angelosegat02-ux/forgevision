@@ -1,6 +1,11 @@
-# ForgeVision V9.1
+# ForgeVision V10 - AI Base
 
-Modifiche:
-- Testi dell’Idea Generator resi leggibili su sfondo scuro.
-- Bottone Portfolio sostituito con popup galleria ForgeVision.
-- Galleria con stampanti e categorie di oggetti realizzati.
+Questa versione introduce una base ordinata per l'integrazione dell'intelligenza artificiale:
+
+- `js/designerEngine.js` — cervello frontend del ForgeVision Designer
+- `js/app.js` — flusso Studio → Designer → Proposte → Preventivo
+- `api/designer.js` — endpoint backend Vercel pronto per OpenAI
+
+## Stato
+
+La parte AI è simulata per testare l'esperienza senza costi API. Nel prossimo step sarà possibile collegare OpenAI inserendo `OPENAI_API_KEY` su Vercel.
