@@ -1,11 +1,37 @@
-# ForgeVision V10 - AI Base
+# ForgeVision V11 — ForgeCore AI Base
 
-Questa versione introduce una base ordinata per l'integrazione dell'intelligenza artificiale:
+Questa versione introduce la prima architettura reale per la parte intelligente di ForgeVision.
 
-- `js/designerEngine.js` — cervello frontend del ForgeVision Designer
-- `js/app.js` — flusso Studio → Designer → Proposte → Preventivo
-- `api/designer.js` — endpoint backend Vercel pronto per OpenAI
+## Cosa contiene
 
-## Stato
+- Home e ForgeVision Studio esistenti.
+- Nuovo motore `ForgeCore` in `js/forgecore.js`.
+- Flusso: Studio → ForgeVision Designer → domande → analisi → proposte → anteprima preventivo.
+- Backend `api/designer.js` predisposto per OpenAI su Vercel.
+- Fallback locale: il Designer funziona anche senza API key, così puoi testare l'esperienza subito.
 
-La parte AI è simulata per testare l'esperienza senza costi API. Nel prossimo step sarà possibile collegare OpenAI inserendo `OPENAI_API_KEY` su Vercel.
+## Come pubblicare
+
+Dopo aver sostituito i file nella cartella del progetto:
+
+```bash
+git add .
+git commit -m "ForgeVision V11 ForgeCore Designer"
+git push
+```
+
+## Collegamento AI reale
+
+Quando vuoi attivare l'AI vera:
+
+1. Vai su Vercel → progetto ForgeVision → Settings → Environment Variables.
+2. Aggiungi:
+   - `OPENAI_API_KEY` = la tua chiave OpenAI
+   - opzionale: `OPENAI_MODEL` = `gpt-4.1-mini`
+3. Rifai deploy.
+
+Se la chiave non è presente, il sito userà automaticamente il motore locale simulato.
+
+## Prossimo sprint
+
+V12: collegare generazione render reali dalle proposte approvate.
