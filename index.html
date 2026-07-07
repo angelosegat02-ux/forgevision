@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ForgeVision | Dalla tua mente alla realtà</title>
   <meta name="description" content="ForgeVision trasforma idee, schizzi e file STL in oggetti reali tramite progettazione e stampa 3D." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <div class="site-bg">
-    <div class="grid-bg"></div>
-    <div class="orb orb-a"></div>
-    <div class="orb orb-b"></div>
-    <canvas id="particles"></canvas>
+    <div class="blueprint-grid"></div>
+    <div class="forge-glow"></div>
   </div>
 
   <header class="navbar">
-    <a href="#top" class="brand">FORGEVISION</a>
+    <a href="#top" class="brand"><span class="b-forge">FORGE</span><span class="b-vision">VISION</span></a>
     <nav>
       <a href="#come-funziona">Come funziona</a>
       <a href="#studio">Studio</a>
@@ -30,10 +31,11 @@
     <section class="hero">
       <div class="hero-kicker">Progettazione · Stampa 3D · Shop</div>
       <h1>FORGEVISION</h1>
+      <div class="dim-line"><span class="tick"></span><span class="track"></span><span class="tick"></span></div>
       <p class="slogan">Dalla tua mente alla realtà</p>
       <p class="promise">Non servono competenze di modellazione 3D. Basta la tua idea.</p>
 
-      <div class="studio-card" id="studio">
+      <div class="studio-card blueprint" id="studio">
         <div class="studio-card-head">
           <span>✨ ForgeVision Studio</span>
           <small>inizia da qui</small>
@@ -47,15 +49,15 @@
       </div>
 
       <div class="paths">
-        <button class="path-card" data-path="idea" data-open-studio>
+        <button class="path-card blueprint" data-path="idea" data-open-studio>
           <b>💡 Ho un'idea</b>
           <span>Descrivila, la trasformiamo in progetto.</span>
         </button>
-        <button class="path-card" data-path="stl" data-open-studio>
+        <button class="path-card blueprint" data-path="stl" data-open-studio>
           <b>📦 Ho un file STL</b>
           <span>Carica il modello e scegli i dettagli.</span>
         </button>
-        <a class="path-card" href="#shop">
+        <a class="path-card blueprint" href="#shop">
           <b>🛒 Visita lo Shop</b>
           <span>Scopri prodotti pronti e personalizzabili.</span>
         </a>
@@ -68,9 +70,9 @@
         <h2>Come funziona</h2>
       </div>
       <div class="timeline">
-        <article><div>💡</div><h3>1. Idea o file</h3><p>Scrivi un’idea, carica un’immagine oppure un file STL.</p></article>
-        <article><div>📐</div><h3>2. Progettazione</h3><p>Trasformiamo la tua idea in un modello 3D pronto per la stampa.</p></article>
-        <article><div>🖨️</div><h3>3. Produzione</h3><p>Stampiamo il tuo progetto e lo spediamo direttamente a casa tua.</p></article>
+        <article class="blueprint"><div class="step-num">01 / IDEA</div><div class="step-icon">💡</div><h3>Idea o file</h3><p>Scrivi un’idea, carica un’immagine oppure un file STL.</p></article>
+        <article class="blueprint"><div class="step-num">02 / DESIGN</div><div class="step-icon">📐</div><h3>Progettazione</h3><p>Trasformiamo la tua idea in un modello 3D pronto per la stampa.</p></article>
+        <article class="blueprint"><div class="step-num">03 / STAMPA</div><div class="step-icon">🖨️</div><h3>Produzione</h3><p>Stampiamo il tuo progetto e lo spediamo direttamente a casa tua.</p></article>
       </div>
     </section>
 
@@ -91,14 +93,14 @@
         <h2>Prodotti in evidenza</h2>
       </div>
       <div class="products">
-        <article><div class="product-image">🎧</div><h3>Supporto cuffie</h3><p>Design moderno da scrivania.</p><strong>da 14,90€</strong></article>
-        <article><div class="product-image">🎮</div><h3>Stand controller</h3><p>Personalizzabile per console.</p><strong>da 12,90€</strong></article>
-        <article><div class="product-image">🔧</div><h3>Ricambio su misura</h3><p>Creato partendo da misure o foto.</p><strong>su preventivo</strong></article>
+        <article class="blueprint"><div class="product-image">🎧</div><h3>Supporto cuffie</h3><p>Design moderno da scrivania.</p><strong>da 14,90€</strong></article>
+        <article class="blueprint"><div class="product-image">🎮</div><h3>Stand controller</h3><p>Personalizzabile per console.</p><strong>da 12,90€</strong></article>
+        <article class="blueprint"><div class="product-image">🔧</div><h3>Ricambio su misura</h3><p>Creato partendo da misure o foto.</p><strong>su preventivo</strong></article>
       </div>
     </section>
 
     <section class="section" id="portfolio">
-      <div class="portfolio-card">
+      <div class="portfolio-card blueprint">
         <span class="eyebrow">Portfolio</span>
         <h2>Ogni progetto racconta un percorso</h2>
         <p>Idea → Concept → Modello 3D → Stampa → Oggetto reale. Questa sarà la sezione dove mostreremo i lavori realizzati e il processo dietro ogni oggetto.</p>
@@ -110,11 +112,11 @@
   <footer>
     <strong>FORGEVISION</strong>
     <span>Dalla tua mente alla realtà</span>
-    <small>© 2026 ForgeVision</small>
+    <small>© 2026 FORGEVISION</small>
   </footer>
 
   <div class="studio-overlay" id="studioOverlay" aria-hidden="true">
-    <div class="studio-shell" role="dialog" aria-modal="true" aria-label="ForgeVision Studio">
+    <div class="studio-shell blueprint" role="dialog" aria-modal="true" aria-label="ForgeVision Studio">
       <button class="close-studio" id="closeStudio">×</button>
       <div class="studio-header">
         <div>
@@ -133,7 +135,7 @@
   </div>
 
   <div class="gallery-overlay" id="galleryOverlay" aria-hidden="true">
-    <div class="gallery-shell" role="dialog" aria-modal="true" aria-label="Galleria ForgeVision">
+    <div class="gallery-shell blueprint" role="dialog" aria-modal="true" aria-label="Galleria ForgeVision">
       <button class="close-gallery" id="closeGallery">×</button>
       <div class="gallery-head">
         <span class="eyebrow">Galleria ForgeVision</span>
@@ -141,12 +143,12 @@
         <p>Qui mostreremo le stampanti disponibili, i dettagli del processo e una raccolta dei prodotti creati o personalizzati per i clienti.</p>
       </div>
       <div class="gallery-grid">
-        <article><div class="gallery-photo">🖨️</div><h3>Stampanti FDM</h3><p>Ideali per prototipi, ricambi, supporti e oggetti resistenti.</p></article>
-        <article><div class="gallery-photo">💎</div><h3>Stampa resina</h3><p>Perfetta per oggetti dettagliati, miniature e parti ad alta precisione.</p></article>
-        <article><div class="gallery-photo">🎧</div><h3>Accessori custom</h3><p>Supporti, gadget e oggetti personalizzati per casa e scrivania.</p></article>
-        <article><div class="gallery-photo">🔧</div><h3>Ricambi su misura</h3><p>Pezzi funzionali progettati partendo da foto, misure o file STL.</p></article>
-        <article><div class="gallery-photo">🎮</div><h3>Gaming setup</h3><p>Stand, organizer, supporti controller e dettagli per postazioni gaming.</p></article>
-        <article><div class="gallery-photo">🏢</div><h3>Prototipi aziendali</h3><p>Concept, mockup e piccoli lotti per testare nuove idee.</p></article>
+        <article class="blueprint"><div class="gallery-photo">🖨️</div><h3>Stampanti FDM</h3><p>Ideali per prototipi, ricambi, supporti e oggetti resistenti.</p></article>
+        <article class="blueprint"><div class="gallery-photo">💎</div><h3>Stampa resina</h3><p>Perfetta per oggetti dettagliati, miniature e parti ad alta precisione.</p></article>
+        <article class="blueprint"><div class="gallery-photo">🎧</div><h3>Accessori custom</h3><p>Supporti, gadget e oggetti personalizzati per casa e scrivania.</p></article>
+        <article class="blueprint"><div class="gallery-photo">🔧</div><h3>Ricambi su misura</h3><p>Pezzi funzionali progettati partendo da foto, misure o file STL.</p></article>
+        <article class="blueprint"><div class="gallery-photo">🎮</div><h3>Gaming setup</h3><p>Stand, organizer, supporti controller e dettagli per postazioni gaming.</p></article>
+        <article class="blueprint"><div class="gallery-photo">🏢</div><h3>Prototipi aziendali</h3><p>Concept, mockup e piccoli lotti per testare nuove idee.</p></article>
       </div>
     </div>
   </div>
